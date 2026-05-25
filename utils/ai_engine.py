@@ -46,7 +46,18 @@ except Exception as e:
 def call_grok_api(messages: list, temperature: float = 0.7) -> str:
     """Wrapper to call Grok API."""
     if not client:
-        return "Error: Grok API key is missing or invalid. Please check your .env settings."
+        return (
+            "🚨 **CRITICAL ERROR: GROK_API_KEY IS MISSING!** 🚨\n\n"
+            "Your application is running on Streamlit Cloud, but it doesn't have your API key. "
+            "To fix this immediately, follow these steps:\n\n"
+            "1. Go to your [Streamlit Cloud Dashboard](https://share.streamlit.io/).\n"
+            "2. Click the three dots (`⋮`) next to this app and select **Settings**.\n"
+            "3. Click on **Secrets** in the left menu.\n"
+            "4. Paste your API key exactly like this:\n"
+            "   `GROK_API_KEY = \"gsk_f3oYpfZy...\"`\n"
+            "5. Click **Save**.\n\n"
+            "If you already did this, make sure it is named `GROK_API_KEY` (with a K, not a Q) and that there are no spaces in the variable name."
+        )
         
     try:
         response = client.chat.completions.create(
