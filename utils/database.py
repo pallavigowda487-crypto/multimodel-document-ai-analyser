@@ -9,7 +9,12 @@ logger = logging.getLogger(__name__)
 
 class DatabaseConfig:
     def __init__(self):
-        self.uri = os.environ.get("MONGODB_URI")
+        try:
+            import streamlit as st
+            self.uri = st.secrets.get("MONGODB_URI", os.environ.get("MONGODB_URI"))
+        except Exception:
+            self.uri = os.environ.get("MONGODB_URI")
+            
         self.client = None
         self.db = None
         

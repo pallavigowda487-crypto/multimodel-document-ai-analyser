@@ -9,7 +9,11 @@ logger = logging.getLogger(__name__)
 
 # Initialize OpenAI client pointing to Grok (or Groq) API
 # xAI's Grok API uses standard OpenAI client library compatibility
-GROK_API_KEY = os.environ.get("GROK_API_KEY")
+try:
+    import streamlit as st
+    GROK_API_KEY = st.secrets.get("GROK_API_KEY", os.environ.get("GROK_API_KEY"))
+except Exception:
+    GROK_API_KEY = os.environ.get("GROK_API_KEY")
 
 # Default model
 MODEL = "grok-beta"
